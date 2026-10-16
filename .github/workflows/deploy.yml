@@ -28,22 +28,21 @@ jobs:
           python-version: '3.12'
 
       # Si falla (menos de 1000 promos, error de red o de parseo) el job corta acá:
-      # no hay build ni deploy y Pages sigue sirviendo el último JSON bueno.
+      # no hay deploy y Pages sigue sirviendo el último JSON bueno.
       - name: Ingesta MODO
         run: python scripts/ingest_modo.py
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-
-      - run: npm ci
-      - run: npm run build
+      # Sin build: se publica solo lo que usa el navegador.
+      - name: Armar sitio
+        run: |
+          mkdir -p _site
+          cp -r index.html css js assets data design-system _site/
+          touch _site/.nojekyll
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build

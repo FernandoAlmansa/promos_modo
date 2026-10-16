@@ -1,6 +1,5 @@
-node_modules/
-dist/
-public/data/*.json
-public/data/*.tmp
+data/*.json
+data/*.tmp
+_site/
 __pycache__/
 .DS_Store

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Promos Bancarias AR — Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Rubik:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/tokens.css">
+<link rel="stylesheet" href="../../css/components.css">
+<style>
+  /* estilos solo del specimen, no forman parte del sistema */
+  .ds-h { font-size: var(--text-2xl); margin: var(--space-12) 0 var(--space-4); }
+  .ds-h:first-of-type { margin-top: var(--space-6); }
+  .ds-note { font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-4); max-width: 68ch; }
+  .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-2); }
+  .ds-sw { border: 1px solid var(--color-border); border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); font-size: var(--text-xs); }
+  .ds-sw__c { height: 56px; display: grid; place-items: center; font: var(--weight-bold) var(--text-md) var(--font-display); }
+  .ds-sw__t { padding: var(--space-2); }
+  .ds-sw__t code { display: block; color: var(--color-text-subtle); }
+  .ds-type > * + * { margin-top: var(--space-2); }
+  .ds-row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: flex-end; }
+  .ds-space { background: var(--color-primary-soft); height: 16px; border-radius: 3px; }
+  .ds-demo { border: 1px dashed var(--color-border-control); border-radius: var(--radius-lg); padding: var(--space-4); background: var(--color-bg); }
+  .ds-phone { max-width: 390px; }
+  .ds-cols { display: grid; gap: var(--space-4); }
+  @media (min-width: 900px) { .ds-cols { grid-template-columns: 1fr 1fr; } }
+  .ds-sheet-static { position: static; background: none; display: block; }
+  .ds-sheet-static .sheet__panel { animation: none; border-radius: var(--radius-xl); max-height: none; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" xmlns:c2pa="http://c2pa.org/manifest"><metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTo4ZWQ5YjVmNC01ODlkLTRiMzYtYjIzOC02YjdmNmFhMDAzYzcAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaL0Eoxnivnjw/mGlKA7Ii5QAAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDoyZTZmMDMyOC02ZTkxLTQ5NjktYWFhNC0zMTM2ZDNmOGEzNzRscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNof0Xwl6i00eJr8NcBW7tMAAAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggaReKlgLQUTD2CwJOwO5cLxE7PeifSgnhnGw3yQgQQumkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaNAfNY3ljugTiu8gcSgM3CEAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIPisI45GutFGCzUAjYvzPF7oeIyJJp8Y30IeNmNatoFtZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GQF/Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjhlZDliNWY0LTU4OWQtNGIzNi1iMjM4LTZiN2Y2YWEwMDNjNy9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOmM1MzNiZjBjLTI2MDAtNDNkNS1iNDNlLWRiMjU4ZWI4MDM0NnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCBpF4qWAtBRMPYLAk7A7lwvETs96J9KCeGcbDfJCBBC6aJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggjwNeZrtPbB4u2JI5BnXH3sySxsJGV5ELDjWM++9kMXSiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFgguE6jdgebhWht69xkdEuaxSSm8/vAcRipKCMdg+QvU/10Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQKtdqw0ShNDWPUNLAgbPK2aJqTojsv9K6Z6U/g/FiX/ZoROHlLRRddOQZ2x9MdVeKWrl+/1ypLGYm4uu/HNkw1g=</c2pa:manifest></metadata>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M3 9h18l-1.5-5h-15z"/><path d="M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-nfc" viewBox="0 0 24 24"><path d="M6 8.32a7.43 7.43 0 0 1 0 7.36"/><path d="M9.46 6.21a11.76 11.76 0 0 1 0 11.58"/><path d="M12.91 4.1a15.91 15.91 0 0 1 .01 15.8"/><path d="M16.37 2a20.16 20.16 0 0 1 0 20"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
+  <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
+  <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></symbol>
+</svg>
+
+<div class="container">
+  <header class="appbar">
+    <div>
+      <h1 class="appbar__title">Promos Bancarias AR · Design System</h1>
+      <p class="appbar__meta">Minimalismo suizo · claro primero · mobile-first · HTML + CSS + JS vanilla</p>
+    </div>
+    <div class="appbar__actions">
+      <button class="btn btn--icon" id="theme" aria-label="Cambiar tema: automático">
+        <svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <h2 class="ds-h">Color</h2>
+  <p class="ds-note">La interfaz es neutra; el color solo significa algo. <b>Verde</b> = reintegro (plata que vuelve), <b>índigo</b> = cuotas, <b>ámbar</b> = condición o urgencia, <b>azul</b> = acción y selección. Todos los pares texto/fondo pasan 4.5:1 en claro y en oscuro.</p>
+  <div class="ds-swatches" id="swatches"></div>
+
+  <h2 class="ds-h">Tipografía</h2>
+  <p class="ds-note">Rubik para cifras y títulos (números tabulares), Nunito Sans para lectura. Escala 12 · 14 · 16 · 18 · 20 · 24 · 32. Cuerpo e inputs en 16px.</p>
+  <div class="ds-type">
+    <div class="num" style="font-size:var(--text-3xl);font-weight:700;color:var(--color-save)">30% <span style="font-size:var(--text-xl);color:var(--color-text-muted)">· tope $40.000</span></div>
+    <h2 style="font-size:var(--text-2xl)">Válidas toda la semana — 24/600</h2>
+    <h3 style="font-size:var(--text-xl)">Título de sección — 20/600</h3>
+    <p style="font-size:var(--text-lg);font-weight:600">Carrefour Hiper, Market y Express — 18/600</p>
+    <p>Cuerpo 16/400 — Reintegro sobre el total de la compra con tarjetas de crédito y débito.</p>
+    <p style="font-size:var(--text-sm);color:var(--color-text-muted)">Descripción 14 — 30% y hasta 6 cuotas sin interés</p>
+    <p style="font-size:var(--text-xs);color:var(--color-text-subtle);font-weight:600">Metadato 12/600 — Mín $15.000 · por mes</p>
+  </div>
+
+  <h2 class="ds-h">Espaciado y forma</h2>
+  <div class="ds-row" id="spaces"></div>
+  <div class="ds-row" style="margin-top:var(--space-4)">
+    <div class="meta__item">radius-sm 6</div>
+    <button class="btn">radius-md 10</button>
+    <div class="promo" style="display:block;padding:var(--space-3)">radius-lg 14</div>
+    <span class="chip">pill</span>
+  </div>
+
+  <h2 class="ds-h">Controles</h2>
+  <div class="ds-demo stack">
+    <div class="tabs" role="tablist">
+      <button class="tabs__tab" role="tab" aria-selected="true"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Semana</button>
+      <button class="tabs__tab" role="tab" aria-selected="false"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-trend"/></svg>¿Hoy o espero?</button>
+    </div>
+    <label class="search">
+      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+      <span class="sr-only">Buscar comercio o rubro</span>
+      <input type="search" placeholder="Comercio o rubro: YPF, farmacia…">
+    </label>
+    <div class="scroll-x" role="group" aria-label="Filtros">
+      <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon icon--sm" aria-hidden="true"><use href="#i-store"/></svg>Presencial</button>
+      <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon icon--sm" aria-hidden="true"><use href="#i-globe"/></svg>Online</button>
+      <button class="chip" aria-pressed="false"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon icon--sm" aria-hidden="true"><use href="#i-nfc"/></svg>NFC</button>
+      <div class="seg" role="group" aria-label="Tipo">
+        <button class="seg__btn" aria-pressed="true">Todo</button>
+        <button class="seg__btn" aria-pressed="false">Reintegro</button>
+        <button class="seg__btn" aria-pressed="false">Cuotas</button>
+      </div>
+      <select class="select is-active" aria-label="Rubro"><option>Mercados</option></select>
+      <select class="select" aria-label="Porcentaje mínimo"><option>Cualquier %</option></select>
+    </div>
+    <div class="cluster">
+      <button class="btn btn--primary">Listo</button>
+      <button class="btn">Secundario</button>
+      <button class="btn btn--ghost">Ver todas</button>
+      <button class="btn" disabled>Deshabilitado</button>
+      <button class="btn btn--icon" aria-label="Filtros"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg></button>
+    </div>
+  </div>
+
+  <h2 class="ds-h">Tarjeta de promo</h2>
+  <p class="ds-note">Orden de lectura: comercio → cifra → condiciones → canal/banco → acción. La cifra va siempre arriba a la derecha y en color semántico; las condiciones como chips cortos, nunca párrafos.</p>
+  <div class="grid-cards" id="cards"></div>
+
+  <h2 class="ds-h">Vista Semana</h2>
+  <div class="ds-demo ds-phone" style="overflow:hidden">
+    <nav class="daystrip" aria-label="Días" id="strip"></nav>
+    <div class="days" id="days"></div>
+  </div>
+
+  <h2 class="ds-h">¿Compro hoy o espero?</h2>
+  <div class="ds-cols">
+    <article class="merchant">
+      <header class="merchant__head"><h3 class="merchant__name">Carrefour</h3><span class="merchant__cat">Mercados</span></header>
+      <div class="matrix" id="m1"></div>
+      <p class="verdict verdict--wait"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-hourglass"/></svg>Esperá al miércoles: 25% vs 10% hoy.</p>
+    </article>
+    <article class="merchant">
+      <header class="merchant__head"><h3 class="merchant__name">YPF</h3><span class="merchant__cat">Estaciones de servicio</span></header>
+      <div class="matrix" id="m2"></div>
+      <p class="verdict verdict--buy"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-check"/></svg>Comprá hoy: es el mejor día.</p>
+    </article>
+  </div>
+
+  <h2 class="ds-h">Bottom sheet · estados</h2>
+  <div class="ds-cols">
+    <div class="sheet ds-sheet-static">
+      <div class="sheet__panel" role="dialog" aria-label="Mi perfil">
+        <div class="sheet__grab" aria-hidden="true"></div>
+        <header class="sheet__head"><h2 class="sheet__title">Mi perfil</h2><button class="btn btn--icon btn--ghost" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></header>
+        <section><p class="sheet__label">Crédito</p><div class="cluster">
+          <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg>Visa</button>
+          <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg>Mastercard</button>
+          <button class="chip" aria-pressed="false"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg>Amex</button></div></section>
+        <section><p class="sheet__label">Bancos</p>
+          <label class="check"><input type="checkbox" checked> BBVA</label>
+          <label class="check"><input type="checkbox"> Galicia</label></section>
+        <footer class="sheet__foot"><button class="btn">Restablecer</button><button class="btn btn--primary">Listo</button></footer>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="merchant"><div class="empty"><svg class="icon" aria-hidden="true"><use href="#i-tag"/></svg><p>No hay promos para “heladería” con tu perfil.<br>Probá sacar el filtro de % mínimo.</p><button class="btn btn--ghost">Limpiar filtros</button></div></div>
+      <div class="skeleton" aria-hidden="true"></div>
+      <p class="summary" role="status">209 de 210 promos que te aplican · actualizado hoy 06:00</p>
+    </div>
+  </div>
+  <p class="summary" style="padding:var(--space-12) 0">Íconos: trazos estilo Lucide (ISC).</p>
+</div>
+
+<script>
+  // ---- datos de muestra ----
+  const SW = [
+    ['--color-bg','Fondo'],['--color-surface','Superficie'],['--color-surface-muted','Superficie tenue'],['--color-border-control','Borde control'],
+    ['--color-text','Texto'],['--color-text-muted','Texto secundario'],['--color-text-subtle','Metadato'],
+    ['--color-primary','Acción','--color-on-primary'],['--color-primary-soft','Seleccionado','--color-on-primary-soft'],
+    ['--color-save','Reintegro','--color-on-save'],['--color-save-soft','Reintegro tenue','--color-on-save-soft'],
+    ['--color-cuotas-soft','Cuotas','--color-cuotas'],['--color-warn-soft','Condición','--color-warn'],['--color-danger-soft','Error','--color-danger'],
+  ];
+  const ic = (id, cls = 'icon icon--sm') => `<svg class="${cls}" aria-hidden="true"><use href="#${id}"/></svg>`;
+  document.getElementById('swatches').innerHTML = SW.map(([v, n, on]) =>
+    `<div class="ds-sw"><div class="ds-sw__c" style="background:var(${v});color:var(${on || '--color-text'})">${on ? 'Aa 30%' : ''}</div><div class="ds-sw__t"><b>${n}</b><code>${v}</code></div></div>`).join('');
+  document.getElementById('spaces').innerHTML = [1,2,3,4,5,6,8,12].map(n =>
+    `<div style="text-align:center;font-size:var(--text-xs);color:var(--color-text-subtle)"><div class="ds-space" style="width:var(--space-${n})"></div>${n * 4}</div>`).join('');
+
+  const CH = { p: ['i-store', 'Presencial'], o: ['i-globe', 'Online'], n: ['i-nfc', 'NFC'] };
+  const card = (p) => `
+    <article class="promo ${p.best ? 'promo--best' : ''}">
+      <div class="promo__thumb">${ic('i-tag', 'icon')}</div>
+      <div class="promo__body"><h3 class="promo__place">${p.pl}</h3><p class="promo__desc">${p.bt}</p></div>
+      <div class="benefit benefit--${p.kind}"><span class="benefit__value">${p.v}</span><span class="benefit__label">${p.l}</span></div>
+      <ul class="meta">${p.meta.map(([t, k]) => `<li class="meta__item ${k ? 'meta__item--' + k : ''}">${t}</li>`).join('')}</ul>
+      <footer class="promo__foot">
+        <span class="promo__channels">${p.ch.map(c => `<span title="${CH[c][1]}">${ic(CH[c][0])}<span class="sr-only">${CH[c][1]}</span></span>`).join('')}</span>
+        <span class="promo__bank">${p.bank}</span>
+        <a class="promo__link" href="#">Ver en MODO ${ic('i-external')}</a>
+      </footer>
+    </article>`;
+  const CARDS = [
+    { pl: 'Comercios de indumentaria adheridos', bt: '30% y hasta 6 cuotas sin interés', kind: 'save', v: '30%', l: 'reintegro', meta: [['6 cuotas s/i', 'cuotas'], ['Tope $50.000 total']], ch: ['p', 'o', 'n'], bank: 'BBVA', best: true },
+    { pl: 'Carrefour Hiper, Market y Express', bt: '10% de reintegro', kind: 'save', v: '10%', l: 'reintegro', meta: [['Tope $10.000 por mes'], ['Mín $15.000']], ch: ['p'], bank: 'BBVA + 17 adheridos' },
+    { pl: 'Gola', bt: 'Hasta 9 cuotas sin interés', kind: 'cuotas', v: '9', l: 'cuotas s/i', meta: [['Sin tope', 'save']], ch: ['p', 'o'], bank: 'Santander' },
+    { pl: 'Cines', bt: '2x1 de 18 a 22 h', kind: 'save', v: '50%', l: 'reintegro', meta: [['18–22 h', 'warn'], ['Termina hoy', 'warn']], ch: ['p'], bank: 'BBVA' },
+  ];
+  document.getElementById('cards').innerHTML = CARDS.map(card).join('');
+
+  const DAYS = [['hoy', '15 oct', 58], ['vie', '16', 45], ['sáb', '17', 38], ['dom', '18', 25], ['lun', '19', 31], ['mar', '20', 56], ['mié', '21', 23]];
+  document.getElementById('strip').innerHTML = DAYS.map(([d, , n], i) =>
+    `<button class="daystrip__day" ${i === 0 ? 'aria-current="true"' : ''}>${d}<span class="daystrip__count">${n}</span></button>`).join('');
+  document.getElementById('days').innerHTML = DAYS.slice(0, 2).map(([d, dt, n], i) =>
+    `<section class="day ${i === 0 ? 'day--today' : ''}"><header class="day__head"><span class="day__name">${d}</span><span class="day__date">${dt}</span><span class="day__count">${n} promos</span></header>${CARDS.slice(0, 2).map(card).join('')}</section>`).join('');
+
+  const matrix = (vals, best) => DAYS.map(([d], i) => {
+    const v = vals[i];
+    if (!v) return `<div class="matrix__cell matrix__cell--empty"><span class="matrix__day">${d}</span><span class="matrix__value">—</span><span class="matrix__sub">&nbsp;</span></div>`;
+    return `<button class="matrix__cell ${i === best ? 'matrix__cell--best' : ''}" aria-label="${d}: ${v[0]}"><span class="matrix__day">${d}</span><span class="matrix__value">${v[0]}</span><span class="matrix__sub">${v[1]}</span></button>`;
+  }).join('');
+  document.getElementById('m1').innerHTML = matrix([['10%', '$10k'], null, null, null, null, ['10%', '$10k'], ['25%', '$15k']], 6);
+  document.getElementById('m2').innerHTML = matrix([['15%', '$8k'], ['10%', '$5k'], null, null, ['10%', '$5k'], null, null], 0);
+
+  // ---- tema: auto → claro → oscuro ----
+  const btn = document.getElementById('theme');
+  const order = ['auto', 'light', 'dark'], icon = { auto: 'i-sun', light: 'i-sun', dark: 'i-moon' }, label = { auto: 'automático', light: 'claro', dark: 'oscuro' };
+  let t = 'auto';
+  try { t = localStorage.getItem('ds-theme') || 'auto'; } catch {}
+  const apply = () => {
+    if (t === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.dataset.theme = t;
+    btn.setAttribute('aria-label', `Cambiar tema: ${label[t]}`);
+    btn.querySelector('use').setAttribute('href', '#' + icon[t]);
+  };
+  btn.addEventListener('click', () => { t = order[(order.indexOf(t) + 1) % 3]; try { localStorage.setItem('ds-theme', t); } catch {} apply(); });
+  apply();
+</script>
+</body>
+</html>

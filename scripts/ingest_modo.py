@@ -35,7 +35,7 @@ SLEEP = 0.7
 MIN_PROMOS = 1000
 MAX_PAGES = 80  # corte de seguridad
 
-OUT_DIR = Path(__file__).resolve().parent.parent / "public" / "data"
+OUT_DIR = Path(__file__).resolve().parent.parent / "data"
 
 DAYS = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
 # flows de MODO -> canal normalizado

@@ -1,0 +1,176 @@
+/* =====================================================================
+   Promos Bancarias AR — Design tokens
+   Fuente de verdad: MASTER.md. Solo variables; nada de selectores de componentes.
+   Claro por defecto. Oscuro: automático por sistema o forzado con
+   <html data-theme="dark">; <html data-theme="light"> fuerza claro.
+   Todos los pares texto/fondo verificados ≥ 4.5:1; bordes de control ≥ 3:1.
+   ===================================================================== */
+
+:root {
+  /* ---------- Superficies ---------- */
+  --color-bg: #F8FAFC;              /* fondo de página */
+  --color-surface: #FFFFFF;         /* tarjetas, sheets, inputs */
+  --color-surface-muted: #EEF2F6;   /* chips de metadato, celdas vacías */
+  --color-border: #E2E8F0;          /* separación de tarjetas (decorativo) */
+  --color-border-control: #7C8AA0;  /* bordes de inputs/controles — 3.5:1 */
+
+  /* ---------- Texto ---------- */
+  --color-text: #0F172A;            /* 17.1:1 sobre bg */
+  --color-text-muted: #475569;      /* 7.6:1 — descripciones */
+  --color-text-subtle: #64748B;     /* 4.8:1 — solo metadatos ≥ 12px */
+
+  /* ---------- Acción (links, selección, foco) ---------- */
+  --color-primary: #1D4ED8;         /* 6.7:1 sobre blanco */
+  --color-on-primary: #FFFFFF;
+  --color-primary-soft: #DBEAFE;    /* fondo de estado seleccionado */
+  --color-on-primary-soft: #1E40AF; /* 7.2:1 */
+  --color-ring: #1D4ED8;
+
+  /* ---------- Semántica de beneficio ----------
+     Verde = plata que vuelve (reintegro %). Índigo = cuotas.
+     Ámbar = condición/urgencia (franja horaria, termina hoy).
+     Nunca usar estos colores para decorar. */
+  --color-save: #047857;            /* 5.5:1 sobre blanco */
+  --color-on-save: #FFFFFF;
+  --color-save-soft: #D1FAE5;
+  --color-on-save-soft: #047857;    /* 4.8:1 */
+  --color-cuotas: #4338CA;
+  --color-cuotas-soft: #E0E7FF;     /* 6.4:1 con --color-cuotas */
+  --color-warn: #92400E;
+  --color-warn-soft: #FEF3C7;       /* 6.4:1 */
+  --color-danger: #B91C1C;          /* 6.5:1 */
+  --color-danger-soft: #FEE2E2;
+
+  /* ---------- Tipografía ---------- */
+  --font-display: 'Rubik', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Nunito Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* escala modular (≈1.2): 12 14 16 18 20 24 32 */
+  --text-xs: 0.75rem;    /* 12 — metadatos, chips */
+  --text-sm: 0.875rem;   /* 14 — descripciones */
+  --text-md: 1rem;       /* 16 — cuerpo, inputs (evita zoom en iOS) */
+  --text-lg: 1.125rem;   /* 18 — nombre de comercio */
+  --text-xl: 1.25rem;    /* 20 — títulos de sección */
+  --text-2xl: 1.5rem;    /* 24 — cifra del beneficio */
+  --text-3xl: 2rem;      /* 32 — cifra destacada (mejor día) */
+
+  --leading-tight: 1.2;
+  --leading-normal: 1.5;
+  --weight-regular: 400;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---------- Espaciado (base 4px, densidad estándar) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;   /* gutter lateral mobile */
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+
+  /* ---------- Forma ---------- */
+  --radius-sm: 6px;     /* chips de metadato */
+  --radius-md: 10px;    /* botones, inputs, badges */
+  --radius-lg: 14px;    /* tarjetas */
+  --radius-xl: 20px;    /* bottom sheet */
+  --radius-pill: 999px;
+  --border-width: 1px;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 6%);
+  --shadow-raised: 0 8px 24px rgb(15 23 42 / 12%);
+
+  /* ---------- Tamaños ---------- */
+  --tap-min: 44px;          /* objetivo táctil mínimo */
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-stroke: 2;
+  --thumb: 44px;            /* logo del comercio */
+  --container-max: 1440px;
+
+  /* ---------- Movimiento (sutil) ---------- */
+  --dur-press: 100ms;
+  --dur-fast: 150ms;
+  --dur-base: 220ms;
+  --dur-sheet: 280ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---------- Capas ---------- */
+  --z-sticky: 10;
+  --z-sheet: 50;
+  --z-toast: 60;
+
+  color-scheme: light;
+}
+
+/* ---------- Oscuro: tokens propios, no inversión ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-bg: #0B1220;
+    --color-surface: #111A2E;
+    --color-surface-muted: #1A2540;
+    --color-border: #22304D;
+    --color-border-control: #6B7A90;
+    --color-text: #E2E8F0;
+    --color-text-muted: #94A3B8;
+    --color-text-subtle: #8492A6;
+    --color-primary: #60A5FA;
+    --color-on-primary: #0B1220;
+    --color-primary-soft: #172554;
+    --color-on-primary-soft: #BFDBFE;
+    --color-ring: #60A5FA;
+    --color-save: #34D399;
+    --color-on-save: #04241A;
+    --color-save-soft: #063B2C;
+    --color-on-save-soft: #34D399;
+    --color-cuotas: #A5B4FC;
+    --color-cuotas-soft: #1E1B4B;
+    --color-warn: #FCD34D;
+    --color-warn-soft: #3B2A06;
+    --color-danger: #FCA5A5;
+    --color-danger-soft: #3F1010;
+    --shadow-card: none;
+    --shadow-raised: 0 8px 24px rgb(0 0 0 / 45%);
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --color-bg: #0B1220;
+  --color-surface: #111A2E;
+  --color-surface-muted: #1A2540;
+  --color-border: #22304D;
+  --color-border-control: #6B7A90;
+  --color-text: #E2E8F0;
+  --color-text-muted: #94A3B8;
+  --color-text-subtle: #8492A6;
+  --color-primary: #60A5FA;
+  --color-on-primary: #0B1220;
+  --color-primary-soft: #172554;
+  --color-on-primary-soft: #BFDBFE;
+  --color-ring: #60A5FA;
+  --color-save: #34D399;
+  --color-on-save: #04241A;
+  --color-save-soft: #063B2C;
+  --color-on-save-soft: #34D399;
+  --color-cuotas: #A5B4FC;
+  --color-cuotas-soft: #1E1B4B;
+  --color-warn: #FCD34D;
+  --color-warn-soft: #3B2A06;
+  --color-danger: #FCA5A5;
+  --color-danger-soft: #3F1010;
+  --shadow-card: none;
+  --shadow-raised: 0 8px 24px rgb(0 0 0 / 45%);
+  color-scheme: dark;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0ms;
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-sheet: 0ms;
+  }
+}
