@@ -27,14 +27,20 @@ jobs:
         with:
           python-version: '3.12'
 
+      # Tests de la lógica pura (cálculo de ahorro, ventana de días, fusión). Node ya viene en el runner.
+      - name: Tests
+        run: node --test tests/promos.test.cjs
+
       # Si falla (menos de 1000 promos, error de red o de parseo) el job corta acá:
       # no hay deploy y Pages sigue sirviendo el último JSON bueno.
       - name: Ingesta MODO
         run: python scripts/ingest_modo.py
 
-      # Sin build: se publica solo lo que usa el navegador.
+      # Sin build: se publica solo lo que usa el navegador. data/ lleva promos.json y bancos.json
+      # (los usa la app por fetch) y promos.js (mismos datos como script, fallback para file://).
       - name: Armar sitio
         run: |
+          test -s data/promos.json && test -s data/bancos.json && test -s data/promos.js
           mkdir -p _site
           cp -r index.html css js assets data design-system _site/
           touch _site/.nojekyll

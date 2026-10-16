@@ -1,4 +1,5 @@
 data/*.json
+data/*.js
 data/*.tmp
 _site/
 __pycache__/

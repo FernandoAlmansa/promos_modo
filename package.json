@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "ingest": "python3 scripts/ingest_modo.py"
+    "ingest": "python3 scripts/ingest_modo.py",
+    "test": "node --test tests/promos.test.cjs"
   },
   "dependencies": {
     "react": "18.3.1",

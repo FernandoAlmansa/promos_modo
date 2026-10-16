@@ -49,6 +49,12 @@
   <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
   <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
 </svg>
 
 <div class="container">
@@ -85,21 +91,36 @@
   <div class="ds-row" style="margin-top:var(--space-4)">
     <div class="meta__item">radius-sm 6</div>
     <button class="btn">radius-md 10</button>
-    <div class="promo" style="display:block;padding:var(--space-3)">radius-lg 14</div>
+    <div class="plist" style="padding:var(--space-3)">radius-lg 14</div>
     <span class="chip">pill</span>
   </div>
 
   <h2 class="ds-h">Controles</h2>
   <div class="ds-demo stack">
     <div class="tabs" role="tablist">
-      <button class="tabs__tab" role="tab" aria-selected="true"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Semana</button>
+      <button class="tabs__tab" role="tab" aria-selected="true"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Calendario</button>
       <button class="tabs__tab" role="tab" aria-selected="false"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-trend"/></svg>¿Hoy o espero?</button>
     </div>
-    <label class="search">
-      <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
-      <span class="sr-only">Buscar comercio o rubro</span>
-      <input type="search" placeholder="Comercio o rubro: YPF, farmacia…">
-    </label>
+    <div class="amount">
+      <svg class="icon amount__icon" aria-hidden="true"><use href="#i-cash"/></svg>
+      <label class="amount__label" for="ds-amount">¿Cuánto vas a gastar?</label>
+      <span class="amount__prefix" aria-hidden="true">$</span>
+      <input class="amount__input" id="ds-amount" type="text" inputmode="numeric" value="50.000">
+      <button type="button" class="btn btn--icon btn--ghost amount__clear" aria-label="Borrar monto"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button>
+    </div>
+    <div style="display:flex;gap:var(--space-2)">
+      <label class="search" style="flex:1;min-width:0">
+        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+        <span class="sr-only">Buscar comercio o rubro</span>
+        <input type="search" placeholder="Buscar comercio o rubro">
+      </label>
+      <button class="btn" style="min-height:48px"><svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg>Filtros<span class="count count--on">2</span></button>
+    </div>
+    <div class="cluster">
+      <button class="chip chip--remove">Solo reintegro<svg class="icon icon--sm" aria-hidden="true"><use href="#i-x"/></svg><span class="sr-only">: quitar filtro</span></button>
+      <button class="chip chip--remove">Mercados<svg class="icon icon--sm" aria-hidden="true"><use href="#i-x"/></svg><span class="sr-only">: quitar filtro</span></button>
+      <button class="btn btn--ghost btn--sm">Limpiar todo</button>
+    </div>
     <div class="scroll-x" role="group" aria-label="Filtros">
       <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon icon--sm" aria-hidden="true"><use href="#i-store"/></svg>Presencial</button>
       <button class="chip" aria-pressed="true"><svg class="icon icon--sm chip__check" aria-hidden="true"><use href="#i-check"/></svg><svg class="icon icon--sm" aria-hidden="true"><use href="#i-globe"/></svg>Online</button>
@@ -121,14 +142,48 @@
     </div>
   </div>
 
-  <h2 class="ds-h">Tarjeta de promo</h2>
-  <p class="ds-note">Orden de lectura: comercio → cifra → condiciones → canal/banco → acción. La cifra va siempre arriba a la derecha y en color semántico; las condiciones como chips cortos, nunca párrafos.</p>
-  <div class="grid-cards" id="cards"></div>
+  <h2 class="ds-h">Fila de promo</h2>
+  <p class="ds-note">Orden de lectura: cifra → comercio → frase del beneficio → alerta (solo si algo te puede dejar afuera). Toda la fila es un botón de 64px o más que abre el detalle. Sin imagen, canales, bancos ni link: eso va al panel.</p>
+  <div class="ds-cols">
+    <div><p class="sheet__label">Sin monto</p><ul class="plist" id="rows-plain"></ul></div>
+    <div><p class="sheet__label">Con monto ($50.000)</p><ul class="plist" id="rows-amount"></ul></div>
+  </div>
 
-  <h2 class="ds-h">Vista Semana</h2>
+  <h2 class="ds-h">Calendario: ventana de días, lo mejor y rubros</h2>
+  <p class="ds-note">Hoy + Mañana por defecto; "Agregar día" hasta 7. En mobile se ve un día por vez (tabs + swipe); en desktop hasta 3 columnas. Rubros con <code>details/summary</code> nativo, cerrados, con contador y el mejor valor.</p>
   <div class="ds-demo ds-phone" style="overflow:hidden">
-    <nav class="daystrip" aria-label="Días" id="strip"></nav>
-    <div class="days" id="days"></div>
+    <nav class="daywin" aria-label="Días">
+      <div class="daywin__scroll">
+        <button class="daywin__day" aria-current="true"><span class="daywin__name">Hoy</span><span class="daywin__date">16 oct</span></button>
+        <button class="daywin__day"><span class="daywin__name">Mañana</span><span class="daywin__date">17 oct</span></button>
+        <button class="daywin__add"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-plus"/></svg>Agregar día</button>
+        <button class="btn btn--icon btn--ghost daywin__remove" aria-label="Quitar el último día"><svg class="icon" aria-hidden="true"><use href="#i-minus"/></svg></button>
+      </div>
+    </nav>
+    <div class="days" style="--cols:1">
+      <section class="day day--today">
+        <header class="day__head"><h3 class="day__name">Hoy</h3><span class="day__date">vie 16 oct</span><span class="day__count">75 promos</span></header>
+        <section class="daybest">
+          <h4 class="daybest__title"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-trend"/></svg>Lo mejor de hoy</h4>
+          <ul class="plist" id="rows-best"></ul>
+        </section>
+        <div class="rgroups">
+          <h4 class="rgroups__title">Solo este día, por rubro</h4>
+          <details class="rgroup" open>
+            <summary class="rgroup__head"><span class="rgroup__title">Mercados</span><span class="count">9</span><span class="rgroup__best">hasta 25%</span><svg class="icon rgroup__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+            <ul class="plist" id="rows-group"></ul>
+          </details>
+          <details class="rgroup">
+            <summary class="rgroup__head"><span class="rgroup__title">Indumentaria y Accesorios</span><span class="count">5</span><span class="rgroup__best">hasta 20%</span><svg class="icon rgroup__chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+          </details>
+        </div>
+      </section>
+    </div>
+    <section class="rgroup rgroup--all">
+      <header class="rgroup__head rgroup__head--static"><h3 class="rgroup__title">Todos los días <span class="rgroup__sub">Valen hoy y mañana</span></h3><span class="count">49</span><span class="rgroup__best">hasta 60%</span></header>
+      <ul class="plist" id="rows-all"></ul>
+      <button class="btn btn--ghost btn--block" aria-expanded="false">Ver las 49</button>
+    </section>
   </div>
 
   <h2 class="ds-h">¿Compro hoy o espero?</h2>
@@ -143,6 +198,38 @@
       <div class="matrix" id="m2"></div>
       <p class="verdict verdict--buy"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-check"/></svg>Comprá hoy: es el mejor día.</p>
     </article>
+  </div>
+
+  <h2 class="ds-h">Panel de detalle</h2>
+  <p class="ds-note">Bottom sheet en mobile y panel lateral derecho desde 1100px (<code>.sheet--side</code>). Arriba responde "¿cuánto me devuelven?" y por qué; abajo, todas las condiciones.</p>
+  <div class="ds-cols">
+    <div class="sheet ds-sheet-static">
+      <div class="sheet__panel" role="dialog" aria-label="Carrefour">
+        <header class="sheet__head"><div class="sheet__heading"><p class="sheet__eyebrow">Mercados · Hoy</p><h2 class="sheet__title">Carrefour</h2></div><button class="btn btn--icon btn--ghost" aria-label="Cerrar"><svg class="icon" aria-hidden="true"><use href="#i-x"/></svg></button></header>
+        <div class="stack">
+          <div class="hero hero--save"><p class="hero__value">Te devuelven <span class="num">$10.000</span></p><p class="hero__sub">30% de $50.000 serían $15.000, pero el tope es $10.000 por mes. Si ya usaste parte del tope en el período, te devuelven menos.</p></div>
+          <p class="callout callout--warn"><svg class="icon icon--sm" aria-hidden="true"><use href="#i-clock"/></svg>Solo de 18 a 22 h</p>
+          <dl class="facts">
+            <div class="facts__row"><dt>Tope</dt><dd>$10.000 por mes</dd></div>
+            <div class="facts__row"><dt>Días</dt><dd>Jueves, viernes y sábado</dd></div>
+            <div class="facts__row"><dt>Vigencia</dt><dd>Hasta el 31 de octubre</dd></div>
+            <div class="facts__row"><dt>Dónde</dt><dd><span class="facts__channels"><span><svg class="icon icon--sm" aria-hidden="true"><use href="#i-store"/></svg>Presencial</span><span><svg class="icon icon--sm" aria-hidden="true"><use href="#i-globe"/></svg>Online</span></span></dd></div>
+            <div class="facts__row"><dt>Bancos</dt><dd>BBVA y 17 bancos más</dd></div>
+          </dl>
+          <section class="stack"><h3 class="sheet__label">2 variantes de esta promo</h3>
+            <ul class="variants">
+              <li class="variant"><span class="variant__text">Presencial · Tope $10.000 por mes · todos los días</span><a class="btn btn--ghost btn--sm" href="#">Ver <svg class="icon icon--sm" aria-hidden="true"><use href="#i-external"/></svg></a></li>
+              <li class="variant"><span class="variant__text">Online · Tope $5.000 por mes · sábados y domingos</span><a class="btn btn--ghost btn--sm" href="#">Ver <svg class="icon icon--sm" aria-hidden="true"><use href="#i-external"/></svg></a></li>
+            </ul></section>
+        </div>
+        <footer class="sheet__foot"><a class="btn btn--primary" href="#">Ver en MODO <svg class="icon icon--sm" aria-hidden="true"><use href="#i-external"/></svg></a></footer>
+      </div>
+    </div>
+    <div class="stack">
+      <div class="hero hero--off"><p class="hero__value">No llegás al mínimo</p><p class="hero__sub">La compra mínima es $75.000: te faltan $25.000. Comprando $75.000 te devolverían $15.000.</p></div>
+      <div class="hero hero--cuotas"><p class="hero__value"><span class="num">6</span> cuotas de <span class="num">$8.333</span></p><p class="hero__sub">Sin interés, sobre una compra de $50.000. No tiene reintegro.</p></div>
+      <div class="hero hero--save"><p class="hero__value"><span class="num">30%</span> de reintegro</p><p class="hero__sub">Hasta $10.000 por mes. Cargá cuánto vas a gastar y te digo cuánto te devuelven.</p></div>
+    </div>
   </div>
 
   <h2 class="ds-h">Bottom sheet · estados</h2>
@@ -185,32 +272,46 @@
   document.getElementById('spaces').innerHTML = [1,2,3,4,5,6,8,12].map(n =>
     `<div style="text-align:center;font-size:var(--text-xs);color:var(--color-text-subtle)"><div class="ds-space" style="width:var(--space-${n})"></div>${n * 4}</div>`).join('');
 
-  const CH = { p: ['i-store', 'Presencial'], o: ['i-globe', 'Online'], n: ['i-nfc', 'NFC'] };
-  const card = (p) => `
-    <article class="promo ${p.best ? 'promo--best' : ''}">
-      <div class="promo__thumb">${ic('i-tag', 'icon')}</div>
-      <div class="promo__body"><h3 class="promo__place">${p.pl}</h3><p class="promo__desc">${p.bt}</p></div>
-      <div class="benefit benefit--${p.kind}"><span class="benefit__value">${p.v}</span><span class="benefit__label">${p.l}</span></div>
-      <ul class="meta">${p.meta.map(([t, k]) => `<li class="meta__item ${k ? 'meta__item--' + k : ''}">${t}</li>`).join('')}</ul>
-      <footer class="promo__foot">
-        <span class="promo__channels">${p.ch.map(c => `<span title="${CH[c][1]}">${ic(CH[c][0])}<span class="sr-only">${CH[c][1]}</span></span>`).join('')}</span>
-        <span class="promo__bank">${p.bank}</span>
-        <a class="promo__link" href="#">Ver en MODO ${ic('i-external')}</a>
-      </footer>
-    </article>`;
-  const CARDS = [
-    { pl: 'Comercios de indumentaria adheridos', bt: '30% y hasta 6 cuotas sin interés', kind: 'save', v: '30%', l: 'reintegro', meta: [['6 cuotas s/i', 'cuotas'], ['Tope $50.000 total']], ch: ['p', 'o', 'n'], bank: 'BBVA', best: true },
-    { pl: 'Carrefour Hiper, Market y Express', bt: '10% de reintegro', kind: 'save', v: '10%', l: 'reintegro', meta: [['Tope $10.000 por mes'], ['Mín $15.000']], ch: ['p'], bank: 'BBVA + 17 adheridos' },
-    { pl: 'Gola', bt: 'Hasta 9 cuotas sin interés', kind: 'cuotas', v: '9', l: 'cuotas s/i', meta: [['Sin tope', 'save']], ch: ['p', 'o'], bank: 'Santander' },
-    { pl: 'Cines', bt: '2x1 de 18 a 22 h', kind: 'save', v: '50%', l: 'reintegro', meta: [['18–22 h', 'warn'], ['Termina hoy', 'warn']], ch: ['p'], bank: 'BBVA' },
+  const DAYS = [['hoy'], ['sáb'], ['dom'], ['lun'], ['mar'], ['mié'], ['jue']];
+  const row = (r) => `
+    <li><button type="button" class="prow">
+      <span class="prow__fig prow__fig--${r.kind}${r.v.length > 5 ? ' prow__fig--long' : ''}"><span class="prow__value">${r.v}</span><span class="prow__label">${r.l}</span></span>
+      <span class="prow__body">
+        <span class="prow__top"><span class="prow__name">${r.pl}</span>${r.note ? `<span class="prow__note">${r.note}</span>` : ''}</span>
+        <span class="prow__line">${r.line}</span>
+        ${r.alert ? `<span class="prow__alert">${ic(r.alert[0])}${r.alert[1]}</span>` : ''}
+      </span>
+      ${ic('i-chevron-right', 'icon prow__chev')}
+    </button></li>`;
+  const PLAIN = [
+    { kind: 'save', v: '30%', l: 'reintegro', pl: 'Carrefour Hiper, Market y Express', line: '30% de reintegro, hasta $10.000 por mes', note: '2 opciones' },
+    { kind: 'save', v: '20%', l: 'reintegro', pl: 'Cines', line: '20% de reintegro, sin tope', alert: ['i-clock', 'Solo de 18 a 22 h'] },
+    { kind: 'cuotas', v: '6', l: 'cuotas s/i', pl: 'Gola', line: '6 cuotas sin interés' },
+    { kind: 'save', v: '$9.593', l: 'reintegro', pl: 'Suscripción', line: '$9.593 de reintegro', alert: ['i-hourglass', 'Termina hoy'] },
   ];
-  document.getElementById('cards').innerHTML = CARDS.map(card).join('');
+  const AMOUNT = [
+    { kind: 'save', v: '$10.000', l: 'te devuelven', pl: 'Carrefour Hiper, Market y Express', line: '30% · tope $10.000/mes' },
+    { kind: 'save', v: '$10.000', l: 'te devuelven', pl: 'Cines', line: '20% · sin tope', alert: ['i-clock', 'Solo de 18 a 22 h'] },
+    { kind: 'cuotas', v: '6', l: 'cuotas s/i', pl: 'Gola', line: '6 cuotas de $8.333 sin interés' },
+    { kind: 'off', v: '25%', l: 'no llegás', pl: 'ChangoMás', line: '25% · tope $25.000/mes', alert: ['i-alert', 'Mín. $75.000, te faltan $25.000'] },
+  ];
+  document.getElementById('rows-plain').innerHTML = PLAIN.map(row).join('');
+  document.getElementById('rows-amount').innerHTML = AMOUNT.map(row).join('');
+  document.getElementById('rows-best').innerHTML = [
+    { kind: 'save', v: '40%', l: 'reintegro', pl: 'El Solar', line: '40% de reintegro, hasta $30.000 por mes', note: 'todos los días' },
+    PLAIN[0], PLAIN[1],
+  ].map(row).join('');
+  document.getElementById('rows-group').innerHTML = [
+    PLAIN[0],
+    { kind: 'save', v: '25%', l: 'reintegro', pl: 'La Gallega', line: '25% de reintegro, hasta $20.000 por mes' },
+    { kind: 'save', v: '20%', l: 'reintegro', pl: 'Comercios adheridos', line: '20% de reintegro, hasta $5.000 por mes' },
+  ].map(row).join('');
 
-  const DAYS = [['hoy', '15 oct', 58], ['vie', '16', 45], ['sáb', '17', 38], ['dom', '18', 25], ['lun', '19', 31], ['mar', '20', 56], ['mié', '21', 23]];
-  document.getElementById('strip').innerHTML = DAYS.map(([d, , n], i) =>
-    `<button class="daystrip__day" ${i === 0 ? 'aria-current="true"' : ''}>${d}<span class="daystrip__count">${n}</span></button>`).join('');
-  document.getElementById('days').innerHTML = DAYS.slice(0, 2).map(([d, dt, n], i) =>
-    `<section class="day ${i === 0 ? 'day--today' : ''}"><header class="day__head"><span class="day__name">${d}</span><span class="day__date">${dt}</span><span class="day__count">${n} promos</span></header>${CARDS.slice(0, 2).map(card).join('')}</section>`).join('');
+  document.getElementById('rows-all').innerHTML = [
+    { kind: 'save', v: '60%', l: 'reintegro', pl: 'Transporte', line: '60% de reintegro, hasta $10.000 por mes', note: 'todo el rubro' },
+    { kind: 'save', v: '40%', l: 'reintegro', pl: 'El Solar', line: '40% de reintegro, hasta $30.000 por mes' },
+    { kind: 'save', v: '20%', l: 'reintegro', pl: 'Gastronomía', line: '20% de reintegro, hasta $25.000 por mes', note: 'todo el rubro' },
+  ].map(row).join('');
 
   const matrix = (vals, best) => DAYS.map(([d], i) => {
     const v = vals[i];

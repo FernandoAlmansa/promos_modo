@@ -6,7 +6,11 @@
 .app__profile { max-width: 46vw; min-width: 0; flex-shrink: 1; }
 .appbar__title { white-space: nowrap; }
 .appbar__actions { flex: 0 1 auto; justify-content: flex-end; }
-.app__controls { display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-3) 0 var(--space-1); }
+.app__controls { display: grid; gap: var(--space-2); margin: var(--space-3) 0 var(--space-1); }
+.app__searchrow { display: flex; gap: var(--space-2); min-width: 0; }
+.app__searchrow .search { flex: 1; min-width: 0; }
+.app__filters { min-height: 48px; flex: none; }
+#active-filters[hidden] { display: none; }
 #main { min-height: 50vh; }
 .app__foot { text-align: center; font-size: var(--text-xs); color: var(--color-text-subtle); padding-top: var(--space-12); }
 
@@ -18,10 +22,13 @@
 
 /* el sheet usa .search de components; dentro del sheet el panel ya tiene gap */
 .sheet section { display: flex; flex-direction: column; gap: var(--space-2); }
+.sheet section > .sheet__label { margin-bottom: 0; }
 
 @media (max-width: 419px) {
   .tabs__tab .icon { display: none; } /* que "¿Compro hoy o espero?" entre en una línea */
 }
 @media (min-width: 720px) {
   .app__profile { max-width: none; }
+  .app__controls { grid-template-columns: minmax(260px, 340px) minmax(0, 1fr); align-items: center; }
+  .app__controls > #active-filters, .app__controls > .summary { grid-column: 1 / -1; }
 }

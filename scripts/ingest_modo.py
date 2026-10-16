@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
-"""Ingesta diaria de promociones MODO -> public/data/{promos,bancos}.json.
+"""Ingesta diaria de promociones MODO -> data/{promos,bancos}.json y data/promos.js.
 
 Solo stdlib. Sale con código != 0 (y sin tocar los JSON) si algo falla o si
 vienen menos de MIN_PROMOS promos, así el workflow no deploya datos malos.
+
+data/promos.js tiene los mismos datos como script clásico (window.__PROMOS__ y
+window.__BANCOS__) para que index.html ande abierto con doble clic (file://),
+donde el navegador no deja hacer fetch.
 """
 from __future__ import annotations
 
@@ -206,9 +210,21 @@ def normalize(c: dict) -> dict | None:
     return p
 
 
+def _dump(obj) -> str:
+    return json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+
+
 def write_json(path: Path, obj):
     tmp = path.with_suffix(".tmp")
-    tmp.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    tmp.write_text(_dump(obj), encoding="utf-8")
+    os.replace(tmp, path)
+
+
+def write_js(path: Path, globals_: dict):
+    """Script clásico que define window.<nombre> = <json> (fallback para file://)."""
+    tmp = path.with_name(path.name + ".tmp")
+    body = "".join(f"window.{k}={_dump(v)};\n" for k, v in globals_.items())
+    tmp.write_text("// Generado por scripts/ingest_modo.py. No editar.\n" + body, encoding="utf-8")
     os.replace(tmp, path)
 
 
@@ -252,11 +268,14 @@ def main() -> int:
     promos.sort(key=lambda p: (-(0 if p.get("cbf") else p.get("cb") or 0), -(p.get("q") or 0), p["pl"].lower()))
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    write_json(OUT_DIR / "bancos.json", {"generated_at": now, "banks": banks})
-    write_json(OUT_DIR / "promos.json", {
+    bancos = {"generated_at": now, "banks": banks}
+    data = {
         "generated_at": now, "source_total": total, "raw": len(raw),
         "count": len(promos), "categories": cats, "promos": promos,
-    })
+    }
+    write_json(OUT_DIR / "bancos.json", bancos)
+    write_json(OUT_DIR / "promos.json", data)
+    write_js(OUT_DIR / "promos.js", {"__PROMOS__": data, "__BANCOS__": bancos})
     size = (OUT_DIR / "promos.json").stat().st_size
     print(f"OK: {len(raw)} únicas, {len(promos)} vigentes, {len(banks)} bancos, promos.json {size/1e6:.2f} MB")
     return 0

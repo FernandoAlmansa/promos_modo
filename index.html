@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Promos MODO</title>
-  <meta name="description" content="Las promociones de MODO que te aplican, día por día.">
+  <meta name="description" content="Las promociones de MODO que te aplican, día por día, y cuánto te devuelven.">
   <meta name="theme-color" content="#F8FAFC" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0B1220" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%23047857%27/%3E%3Ctext x=%2716%27 y=%2722%27 font-family=%27Arial%27 font-weight=%27700%27 font-size=%2716%27 fill=%27white%27 text-anchor=%27middle%27%3E%25%3C/text%3E%3C/svg%3E">
@@ -18,8 +18,18 @@
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/components.css">
   <link rel="stylesheet" href="css/app.css">
-  <link rel="preload" href="data/promos.json" as="fetch" crossorigin>
-  <script type="module" src="js/app.js"></script>
+  <script>
+    /* precarga del JSON solo por http(s); abierto con doble clic (file://) se usa data/promos.js */
+    if (location.protocol !== 'file:') {
+      const l = document.createElement('link');
+      Object.assign(l, { rel: 'preload', href: 'data/promos.json', as: 'fetch', crossOrigin: 'anonymous' });
+      document.head.appendChild(l);
+    }
+  </script>
+  <!-- scripts clásicos (no módulos): así también anda abierto desde file:// -->
+  <script src="js/storage.js" defer></script>
+  <script src="js/promos.js" defer></script>
+  <script src="js/app.js" defer></script>
 </head>
 <body>
   <!-- Sprite de íconos (copia de assets/icons.svg; si cambiás ese archivo, volvé a pegarlo acá) -->
@@ -41,6 +51,12 @@
   <symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.59 2.59A2 2 0 0 0 11.17 2H4a2 2 0 0 0-2 2v7.17a2 2 0 0 0 .59 1.42l8.7 8.7a2.43 2.43 0 0 0 3.42 0l6.58-6.58a2.43 2.43 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r="1"/></symbol>
   <symbol id="i-trend" viewBox="0 0 24 24"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></symbol>
   <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M5 22h14M5 2h14M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22M7 2v4.17a2 2 0 0 0 .59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></symbol>
 </svg>
 
   <div class="container app">
@@ -62,7 +78,7 @@
 
     <nav class="tabs" role="tablist" aria-label="Vistas">
       <button type="button" class="tabs__tab" role="tab" data-action="tab" data-tab="week" aria-selected="true">
-        <svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Semana
+        <svg class="icon icon--sm" aria-hidden="true"><use href="#i-calendar"/></svg>Calendario
       </button>
       <button type="button" class="tabs__tab" role="tab" data-action="tab" data-tab="bow" aria-selected="false">
         <svg class="icon icon--sm" aria-hidden="true"><use href="#i-trend"/></svg>¿Compro hoy o espero?
@@ -70,22 +86,78 @@
     </nav>
 
     <div class="app__controls">
-      <label class="search">
-        <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
-        <span class="sr-only" id="search-label">Buscar comercio o rubro</span>
-        <input type="search" id="search" autocomplete="off" enterkeyhint="search" placeholder="Buscar comercio o rubro">
-      </label>
-      <div class="scroll-x" id="filters" role="group" aria-label="Filtros"></div>
+      <div class="amount" id="amount-box">
+        <svg class="icon amount__icon" aria-hidden="true"><use href="#i-cash"/></svg>
+        <label class="amount__label" for="amount">¿Cuánto vas a gastar?</label>
+        <span class="amount__prefix" aria-hidden="true">$</span>
+        <input class="amount__input" id="amount" type="text" inputmode="numeric" autocomplete="off" enterkeyhint="done" placeholder="Opcional" aria-describedby="amount-help">
+        <button type="button" class="btn btn--icon btn--ghost amount__clear" data-action="amount-clear" aria-label="Borrar monto" hidden>
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+        <span class="sr-only" id="amount-help">Con el monto te muestro cuánta plata te devuelven en cada promo.</span>
+      </div>
+      <div class="app__searchrow">
+        <label class="search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <span class="sr-only" id="search-label">Buscar comercio o rubro</span>
+          <input type="search" id="search" autocomplete="off" enterkeyhint="search" placeholder="Comercio o rubro">
+        </label>
+        <button type="button" class="btn app__filters" data-action="filters" aria-haspopup="dialog" id="filters-btn">
+          <svg class="icon" aria-hidden="true"><use href="#i-filter"/></svg><span>Filtros</span>
+        </button>
+      </div>
+      <div class="cluster" id="active-filters" role="group" aria-label="Filtros activos" hidden></div>
       <p class="summary" id="summary" role="status" aria-live="polite"></p>
     </div>
 
     <main id="main"></main>
 
     <footer class="app__foot">
-      Datos públicos de modo.com.ar, actualizados una vez por día. Verificá las condiciones en MODO antes de pagar.
+      Datos públicos de modo.com.ar, actualizados una vez por día. Lo que te devuelven es una estimación: verificá las condiciones en MODO antes de pagar.
     </footer>
   </div>
 
+  <!-- Detalle de una promo: bottom sheet en mobile, panel lateral en desktop -->
+  <div class="sheet sheet--side" id="detail" hidden>
+    <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <div class="sheet__grab" aria-hidden="true"></div>
+      <header class="sheet__head">
+        <div class="sheet__heading">
+          <p class="sheet__eyebrow" id="detail-cat"></p>
+          <h2 class="sheet__title" id="detail-title">Promo</h2>
+        </div>
+        <button type="button" class="btn btn--icon btn--ghost" data-action="sheet-close" aria-label="Cerrar">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </header>
+      <div class="stack" id="detail-body"></div>
+      <footer class="sheet__foot">
+        <a class="btn btn--primary" id="detail-link" href="#" target="_blank" rel="noopener noreferrer">
+          Ver en MODO <svg class="icon icon--sm" aria-hidden="true"><use href="#i-external"/></svg><span class="sr-only"> (abre en otra pestaña)</span>
+        </a>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="sheet" id="fsheet" hidden>
+    <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="fsheet-title">
+      <div class="sheet__grab" aria-hidden="true"></div>
+      <header class="sheet__head">
+        <h2 class="sheet__title" id="fsheet-title">Filtros</h2>
+        <button type="button" class="btn btn--icon btn--ghost" data-action="sheet-close" aria-label="Cerrar">
+          <svg class="icon" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </header>
+      <div class="stack" id="fsheet-body"></div>
+      <footer class="sheet__foot">
+        <button type="button" class="btn" data-action="clear">Limpiar</button>
+        <button type="button" class="btn btn--primary" data-action="sheet-close" id="fsheet-done">Listo</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Perfil -->
   <div class="sheet" id="sheet" hidden>
     <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
       <div class="sheet__grab" aria-hidden="true"></div>
